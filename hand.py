@@ -24,6 +24,8 @@ def get_hand_points(image_path):
     image_height, image_width, num_channels = image.shape
     mp_image = mp.Image.create_from_file(image_path)
     detection_result = detector.detect(mp_image)
+    if len(detection_result.hand_landmarks) == 0:
+        return []
     hand_norm_points = np.array([(l.x, l.y) for h in detection_result.hand_landmarks for l in h if 0<l.x<1 and 0<l.y<1])
     image_size = np.array([image_width, image_height])
     return np.round(hand_norm_points * image_size.T).astype(int)
