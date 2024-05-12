@@ -19,10 +19,11 @@ options = vision.HandLandmarkerOptions(base_options=base_options,
 detector = vision.HandLandmarker.create_from_options(options)
 
 
-def get_hand_points(image_path):
-    image = cv2.imread(image_path)
+def get_hand_points(image):
+    # image = cv2.imread(image_path)
     image_height, image_width, num_channels = image.shape
-    mp_image = mp.Image.create_from_file(image_path)
+    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+    # mp_image = mp.Image.create_from_file(image_path)
     detection_result = detector.detect(mp_image)
     if len(detection_result.hand_landmarks) == 0:
         return []
