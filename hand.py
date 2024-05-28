@@ -16,10 +16,10 @@ mp_drawing = mp.solutions.drawing_utils
 base_options = python.BaseOptions(model_asset_path='hand_landmarker.task')
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                        num_hands=2)
-detector = vision.HandLandmarker.create_from_options(options)
 
 
 def get_hand_points(image):
+    detector = vision.HandLandmarker.create_from_options(options)
     # image = cv2.imread(image_path)
     image_height, image_width, num_channels = image.shape
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)

@@ -160,7 +160,7 @@ class KeyboardMainSegmentCandidate:
 
     def to_dict(self):
         return {
-            'segment': self.segment,
+            'segment': self.segment.to_dict(),
             'valid': self.valid
         }
     

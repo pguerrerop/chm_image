@@ -85,10 +85,11 @@ class KeyboardDetector:
         self.lm.selected_line = np.argmax(scores)
 
     def to_dict(self):
+        candidates = [c.to_dict() for c in self.main_segment_candidates]
         return {
             'main_segment': {
-                'candidates': self.main_segment_candidates,
-                'selected_index': self.lm.selected_line
+                'candidates': candidates,
+                'selected_index': int(self.lm.selected_line)
                 }
         }
     
@@ -153,7 +154,7 @@ class KeyboardDetector:
             # hsv_variances = white_color_model.hsv_variances()
             # print('hsv_variances:', hsv_variances, np.max(hsv_variances))
         
-    def plot(self, plot_segment_process=False, plot_points=True, thickness=10, point_radius=3):
+    def plot(self, plot_segment_process=False, plot_points=True, thickness=10, point_radius=3, return_image=False):
         draw_image = self.image.copy()
         draw_image = draw_points(draw_image, self.hand_points, (0, 255, 255), radius=point_radius, return_image=True)
         for i, candidate in enumerate(self.main_segment_candidates):
@@ -165,7 +166,8 @@ class KeyboardDetector:
         if plot_points:
             draw_points(draw_image, self.lm.points, radius=point_radius)
         imshow(draw_image)
-        return draw_image
+        if return_image:
+            return draw_image
     
     def plot_segment_process(self):
         for candidate in self.main_segment_candidates:
